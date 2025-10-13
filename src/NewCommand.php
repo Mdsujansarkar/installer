@@ -505,11 +505,9 @@ class NewCommand extends Command
                 $output->writeln('');
             }
 
-            // Default to npm
             $packageInstall = 'npm install';
             $packageBuild = 'npm run build';
 
-            // Override based on lock file detection
             if (file_exists($directory.'/pnpm-lock.yaml')) {
                 $packageInstall = 'pnpm install';
                 $packageBuild = 'pnpm run build';
@@ -529,7 +527,7 @@ class NewCommand extends Command
 
             if (! $input->getOption('npm') && $input->isInteractive()) {
                 $runNpm = confirm(
-                    label: 'Would you like to run <options=bold>'.$packageInstall.'</> and <options=bold>'.$packageBuild.'</>?'
+                    label: 'Would you like to run <options=bold>{$packageInstall}</> and <options=bold>{$packageBuild}</>?'
                 );
             }
 
@@ -541,7 +539,7 @@ class NewCommand extends Command
             $output->writeln('<fg=gray>➜</> <options=bold>cd '.$name.'</>');
 
             if (! $runNpm) {
-                $output->writeln('<fg=gray>➜</> <options=bold>'.$packageInstall.' && npm run build</>');
+                $output->writeln('<fg=gray>➜</> <options=bold>{$packageInstall} && {$packageBuild}</>');
             }
 
             if ($this->isParkedOnHerdOrValet($directory)) {
