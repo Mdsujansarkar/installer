@@ -505,16 +505,22 @@ class NewCommand extends Command
                 $output->writeln('');
             }
 
+            // Default to npm
             $packageInstall = 'npm install';
             $packageBuild = 'npm run build';
 
+            // Override based on lock file detection
             if (file_exists($directory.'/pnpm-lock.yaml')) {
                 $packageInstall = 'pnpm install';
                 $packageBuild = 'pnpm run build';
-            } elseif (file_exists($directory.'/yarn.lock')) {
+            }
+
+            if (file_exists($directory.'/yarn.lock')) {
                 $packageInstall = 'yarn install';
                 $packageBuild = 'yarn run build';
-            } elseif (file_exists($directory.'/bun.lock')) {
+            }
+
+            if (file_exists($directory.'/bun.lock')) {
                 $packageInstall = 'bun install';
                 $packageBuild = 'bun run build';
             }
